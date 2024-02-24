@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário com hCaptcha</title>
+    <!-- Adicione a biblioteca hCaptcha -->
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+</head>
+<body>
+    <form id="myForm" action="process_form.php" method="post"  onsubmit="return validateForm()">
+        <div class="h-captcha" data-sitekey="CHAVE"></div>
+        <input type="hidden" id="captchaFilled" name="captchaFilled" value="false"> <!-- Valor padrão é false -->
+        <button type="submit">Enviar</button>
+    </form>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(event) {
+            var captchaResponse = document.querySelector('.h-captcha [name="h-captcha-response"]').value;
+            if (!captchaResponse) {
+                alert('Por favor, marque o hCaptcha.');
+                event.preventDefault(); // Evita que o formulário seja enviado se o hCaptcha não estiver preenchido
+            } else {
+                // Define o valor do campo oculto como true quando o hCaptcha é preenchido
+                document.getElementById('captchaFilled').value = 'true';
+            }
+        });
+    </script>
+</body>
+</html>
